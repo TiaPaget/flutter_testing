@@ -16,3 +16,6 @@ Creator of the free pointing hand vector:
 
 ## Resources Used
 
+### Flutter Animation
+Animation will be used in multiple places to ensure that interactions feel engaging and intuitive.
+<a href="https://www.youtube.com/watch?v=OtrWXLfGtqE&list=PL4cUxeGkcC9gP1qg8yj-Jokef29VRCLt1">Tutorials by Net Ninja</a>
