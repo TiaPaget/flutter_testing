@@ -1,16 +1,21 @@
 # flutter_testing
 
-A new Flutter project.
+This application is for testing things in Flutter and learning as I go.
 
-## Getting Started
+# Decider Application
+This application will be used by multiple users on a single device. Each user will tap on the screen once at the location nearest to them. Each tap will display as a small circle on the screen (each with a different random colour). A central "Decide" button will be pressed where each circle (user) is greyed out.
+At random colour will cycle between different circles, indicating that it may be chosen. After a given number of cycles (Each circle highlighted twice), the final circle will stay coloured. The screen will fade to this colour and state that this user has been chosen.
+The user can now go back to restart the process.
 
-This project is a starting point for a Flutter application.
+# Design
+Figma Link:
+https://www.figma.com/design/1OiCtaU92xMkdnfr9GkTvs/Flutter-Decider-App?node-id=0-1&t=Fzmq49gQhHXjaNRN-1
 
-A few resources to get you started if this is your first Flutter project:
+Creator of the free pointing hand vector:
+<a href="https://www.vecteezy.com/vector-art/10287613-hand-icon-isolated-on-a-white-background-pointing-hand-symbol-for-web-and-mobile-apps">Pointing Hand Vector</a>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Resources Used
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Flutter Animation
+Animation will be used in multiple places to ensure that interactions feel engaging and intuitive.
+<a href="https://www.youtube.com/watch?v=OtrWXLfGtqE&list=PL4cUxeGkcC9gP1qg8yj-Jokef29VRCLt1">Tutorials by Net Ninja</a>
