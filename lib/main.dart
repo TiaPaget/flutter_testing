@@ -33,9 +33,10 @@ class MainPage extends StatelessWidget {
             //top text
             Container(
               child: Center(
-                child: Text(
+                child: const Text(
                   "Tap the part of the screen that is closest to you!",
-                  style: TextStyle(fontSize: 32),
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
@@ -47,7 +48,11 @@ class MainPage extends StatelessWidget {
                     onPressed: () {
                       //Decide button
                     },
-                    child: const Text("DECIDE"),
+                    child: const Text(
+                      "DECIDE",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                    ),
                   ),
                 ),
               ),
@@ -59,7 +64,8 @@ class MainPage extends StatelessWidget {
                   angle: 3.141592, //180 degrees in radians (pi)
                   child: const Text(
                     "Tap the part of the screen that is closest to you!",
-                    style: TextStyle(fontSize: 32),
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
