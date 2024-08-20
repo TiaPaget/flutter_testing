@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlayerCounter extends StatefulWidget {
@@ -14,7 +15,30 @@ class _PlayerCounterState extends State<PlayerCounter> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      
-    )
+      onTapDown: (details) {
+        setState(() {
+          _tapPosition = details.localPosition;
+          _playerCount++;
+        });
+      },
+      child: Stack(//used to draw multiple elements that may overlap
+          children: <Widget>[
+        if (_tapPosition != null)
+          Positioned(
+            //positioning the circles based on the tap location
+            left: _tapPosition!.dx - 25,
+            top: _tapPosition!.dy - 25,
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: const BoxDecoration(
+                //test style should display a red circle
+                color: Color(0xffFF0000),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+      ]),
+    );
   }
 }
