@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'theme.dart';
+import 'player_counter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,24 +40,31 @@ class MainPage extends StatelessWidget {
             ),
             //Mid-section touch area, with button
             Expanded(
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    //Decide button
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(15), // Rounded corners
+              child: Stack(
+                children: [
+                  //touch area
+                  const PlayerCounter(),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        //Decide button
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(15), // Rounded corners
+                        ),
+                      ),
+                      child: const Text(
+                        "DECIDE",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w800),
+                      ),
                     ),
                   ),
-                  child: const Text(
-                    "DECIDE",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-                  ),
-                ),
+                ],
               ),
             ),
             //bottom upside down text section
