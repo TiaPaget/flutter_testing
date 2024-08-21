@@ -47,6 +47,7 @@ class MainPage extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
+                        print("Decide button pressed");
                         //Decide button
                       },
                       style: ElevatedButton.styleFrom(
