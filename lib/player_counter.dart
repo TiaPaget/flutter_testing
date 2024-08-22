@@ -11,15 +11,29 @@ class PlayerCounter extends StatefulWidget {
 class _PlayerCounterState extends State<PlayerCounter> {
   int _playerCount = 0;
   Offset? _tapPosition;
+
+  final List<Color> _circleColors = <Color>[
+    const Color(0xffff5d069),
+    const Color.fromARGB(255, 123, 171, 234),
+    const Color(0xfffd66ff2),
+    const Color(0xffff5fd99a),
+    const Color(0xffffd9965f),
+    const Color.fromARGB(255, 185, 98, 91),
+    const Color.fromARGB(255, 34, 71, 159),
+    const Color(0xffff7943bf),
+    const Color(0xffff4d3c39),
+    const Color(0xffff1b570a),
+    const Color(0xffff961e84),
+    const Color.fromARGB(255, 238, 40, 40),
+  ];
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (details) {
-        print("Tapped at ${details.localPosition}");
-
         setState(() {
           _tapPosition = details.localPosition;
           _playerCount++;
+          print("player count is: $_playerCount");
         });
       },
       child: Container(
@@ -34,9 +48,9 @@ class _PlayerCounterState extends State<PlayerCounter> {
               child: Container(
                 width: 50,
                 height: 50,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   //test style should display a red circle
-                  color: Color(0xffFF0000),
+                  color: _circleColors[_playerCount % _circleColors.length],
                   shape: BoxShape.circle,
                 ),
               ),
