@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class PlayerCounter extends StatefulWidget {
@@ -13,20 +15,17 @@ class _PlayerCounterState extends State<PlayerCounter> {
 
   final List<Widget> _players = [];
 
-  final List<Color> _circleColors = <Color>[
-    const Color.fromRGBO(245, 208, 105, 1),
-    const Color.fromARGB(255, 123, 171, 234),
-    const Color.fromRGBO(214, 111, 242, 1),
-    const Color.fromRGBO(95, 217, 154, 1),
-    const Color.fromARGB(255, 217, 150, 95),
-    const Color.fromARGB(255, 185, 98, 91),
-    const Color.fromARGB(255, 34, 71, 159),
-    const Color.fromRGBO(121, 67, 191, 1),
-    const Color.fromARGB(255, 108, 86, 82),
-    const Color.fromRGBO(27, 87, 10, 1),
-    const Color.fromRGBO(150, 30, 132, 1),
-    const Color.fromARGB(255, 238, 40, 40),
-  ];
+  final Random _random = Random();
+
+  Color _getRandomColor() {
+    return Color.fromARGB(
+      255, //alpha
+      _random.nextInt(156) + 100, //red
+      _random.nextInt(156) + 100, //green
+      _random.nextInt(156) + 100, //blue
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -46,7 +45,7 @@ class _PlayerCounterState extends State<PlayerCounter> {
                 height: 50,
                 decoration: BoxDecoration(
                   //test style should display a red circle
-                  color: _circleColors[_players.length],
+                  color: _getRandomColor(),
                   shape: BoxShape.circle,
                 ),
               ),
