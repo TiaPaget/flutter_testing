@@ -1,6 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'circle_animation_controller.dart'; // Import the new controller
 
 class PlayerCounter extends StatefulWidget {
   const PlayerCounter({super.key});
@@ -9,12 +9,11 @@ class PlayerCounter extends StatefulWidget {
   State<PlayerCounter> createState() => _PlayerCounterState();
 }
 
-class _PlayerCounterState extends State<PlayerCounter> {
+class _PlayerCounterState extends State<PlayerCounter>
+    with TickerProviderStateMixin {
   int _playerCount = 0;
   Offset? _tapPosition;
-
   final List<Widget> _players = [];
-
   final Random _random = Random();
 
   Color _getRandomColor() {
@@ -34,43 +33,27 @@ class _PlayerCounterState extends State<PlayerCounter> {
           _tapPosition = details.localPosition;
           _playerCount++;
           print("Players: $_playerCount");
-          _players.add(
-            //adding the circles to the _players list
-            Positioned(
-              //positioning the circles based on the tap location
-              left: _tapPosition!.dx - 25,
-              top: _tapPosition!.dy - 25,
-              child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  //test style should display a red circle
-                  color: _getRandomColor(),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-          );
+
+          final controller = CircleAnimationController(vsync: this);
+          _players.add(_buildAnimatedCircle(
+              _tapPosition!, _getRandomColor(), controller));
+          controller.controller.forward(from: 0);
         });
       },
       onDoubleTapDown: (details) {
         setState(() {
           Offset tapPosition = details.localPosition;
 
-          //iterate through the player list
           for (int i = 0; i < _players.length; i++) {
             Positioned circle = _players[i] as Positioned;
 
-            //circles position
             double circleLeft = circle.left!;
             double circleTop = circle.top!;
 
-            //check if the tap is within the circle
             if (tapPosition.dx >= circleLeft &&
                 tapPosition.dx <= circleLeft + 50 &&
                 tapPosition.dy >= circleTop &&
                 tapPosition.dy <= circleTop + 50) {
-              //remove the circle from the list
               _players.removeAt(i);
               _playerCount--;
               print("Players: $_playerCount");
@@ -81,12 +64,43 @@ class _PlayerCounterState extends State<PlayerCounter> {
       },
       child: Container(
         color: Colors.transparent,
-        child: Stack(//used to draw multiple elements that may overlap
-            children: <Widget>[
-          ..._players,
-          //else display a message saying 12 players is the limit.
-        ]),
+        child: Stack(
+          children: <Widget>[
+            ..._players,
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _buildAnimatedCircle(
+      Offset position, Color color, CircleAnimationController controller) {
+    return AnimatedBuilder(
+      animation: controller.controller,
+      builder: (context, child) {
+        return Positioned(
+          left: position.dx - controller.animationSize.value / 2,
+          top: position.dy - controller.animationSize.value / 2,
+          child: Container(
+            width: controller.animationSize.value,
+            height: controller.animationSize.value,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: color,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    for (var player in _players) {
+      if (player is AnimatedBuilder) {
+        (player.animation as AnimationController).dispose();
+      }
+    }
+    super.dispose();
   }
 }
