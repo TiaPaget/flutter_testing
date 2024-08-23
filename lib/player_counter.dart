@@ -36,6 +36,7 @@ class _PlayerCounterState extends State<PlayerCounter> {
           _playerCount++;
           print("Players: $_playerCount");
           _players.add(
+            //adding the circles to the _players list
             Positioned(
               //positioning the circles based on the tap location
               left: _tapPosition!.dx - 25,
@@ -51,6 +52,32 @@ class _PlayerCounterState extends State<PlayerCounter> {
               ),
             ),
           );
+        });
+      },
+      onDoubleTapDown: (details) {
+        setState(() {
+          Offset tapPosition = details.localPosition;
+
+          //iterate through the player list
+          for (int i = 0; i < _players.length; i++) {
+            Positioned circle = _players[i] as Positioned;
+
+            //circles position
+            double circleLeft = circle.left!;
+            double circleTop = circle.top!;
+
+            //check if the tap is within the circle
+            if (tapPosition.dx >= circleLeft &&
+                tapPosition.dx <= circleLeft + 50 &&
+                tapPosition.dy >= circleTop &&
+                tapPosition.dy <= circleTop + 50) {
+              //remove the circle from the list
+              _players.removeAt(i);
+              _playerCount--;
+              print("Players: $_playerCount");
+              break;
+            }
+          }
         });
       },
       child: Container(
