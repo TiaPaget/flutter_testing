@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'circle_animation_controller.dart'; // Import the new controller
+import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
 class PlayerCounter extends StatefulWidget {
   const PlayerCounter({super.key});
@@ -15,6 +16,7 @@ class _PlayerCounterState extends State<PlayerCounter>
   Offset? _tapPosition;
   final List<Widget> _players = [];
   final Random _random = Random();
+  //late CircleAnimationController _controller;
 
   Color _getRandomColor() {
     return Color.fromARGB(
@@ -81,12 +83,20 @@ class _PlayerCounterState extends State<PlayerCounter>
         return Positioned(
           left: position.dx - controller.animationSize.value / 2,
           top: position.dy - controller.animationSize.value / 2,
-          child: Container(
-            width: controller.animationSize.value,
-            height: controller.animationSize.value,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: color,
+          child: RippleAnimation(
+            delay: const Duration(milliseconds: 0),
+            minRadius: 35,
+            color: color,
+            ripplesCount: 5,
+            duration: const Duration(milliseconds: 700),
+            repeat: false,
+            child: Container(
+              width: controller.animationSize.value,
+              height: controller.animationSize.value,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+              ),
             ),
           ),
         );
