@@ -43,26 +43,8 @@ class _PlayerCounterState extends State<PlayerCounter>
         });
       },
       onDoubleTapDown: (details) {
-        setState(() {
-          Offset tapPosition = details.localPosition;
-
-          for (int i = 0; i < _players.length; i++) {
-            Positioned circle = _players[i] as Positioned;
-
-            double circleLeft = circle.left!;
-            double circleTop = circle.top!;
-
-            if (tapPosition.dx >= circleLeft &&
-                tapPosition.dx <= circleLeft + 50 &&
-                tapPosition.dy >= circleTop &&
-                tapPosition.dy <= circleTop + 50) {
-              _players.removeAt(i);
-              _playerCount--;
-              print("Players: $_playerCount");
-              break;
-            }
-          }
-        });
+        // remove the double tapped object
+        
       },
       child: Container(
         color: Colors.transparent,
