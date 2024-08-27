@@ -1,7 +1,8 @@
 import 'dart:math';
+import 'player.dart';
 import 'package:flutter/material.dart';
-import 'circle_animation_controller.dart'; // Import the new controller
-import 'package:simple_ripple_animation/simple_ripple_animation.dart';
+import 'circle_animation_controller.dart';
+//ripple animation
 
 class PlayerCounter extends StatefulWidget {
   const PlayerCounter({super.key});
@@ -14,7 +15,7 @@ class _PlayerCounterState extends State<PlayerCounter>
     with TickerProviderStateMixin {
   int _playerCount = 0;
   Offset? _tapPosition;
-  final List<Widget> _players = [];
+  final List<Player> _players = [];
   final Random _random = Random();
   //late CircleAnimationController _controller;
 
@@ -35,63 +36,29 @@ class _PlayerCounterState extends State<PlayerCounter>
           _tapPosition = details.localPosition;
           _playerCount++;
           print("Players: $_playerCount");
-
           final controller = CircleAnimationController(vsync: this);
-          _players.add(_buildAnimatedCircle(
-              _tapPosition!, _getRandomColor(), controller));
-          controller.controller.forward(from: 0);
+          _players.add(Player(
+              _playerCount, _tapPosition!, _getRandomColor(), controller));
         });
       },
       onDoubleTapDown: (details) {
         // remove the double tapped object
-        
       },
       child: Container(
         color: Colors.transparent,
         child: Stack(
           children: <Widget>[
-            ..._players,
+            ..._players.map((player) => player.buildAnimatedCircle()),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAnimatedCircle(
-      Offset position, Color color, CircleAnimationController controller) {
-    return AnimatedBuilder(
-      animation: controller.controller,
-      builder: (context, child) {
-        return Positioned(
-          left: position.dx - controller.animationSize.value / 2,
-          top: position.dy - controller.animationSize.value / 2,
-          child: RippleAnimation(
-            delay: const Duration(milliseconds: 0),
-            minRadius: 35,
-            color: color,
-            ripplesCount: 5,
-            duration: const Duration(milliseconds: 700),
-            repeat: false,
-            child: Container(
-              width: controller.animationSize.value,
-              height: controller.animationSize.value,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   void dispose() {
     for (var player in _players) {
-      if (player is AnimatedBuilder) {
-        (player.animation as AnimationController).dispose();
-      }
+      player.dispose();
     }
     super.dispose();
   }
