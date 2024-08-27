@@ -13,7 +13,6 @@ class PlayerCounter extends StatefulWidget {
 
 class _PlayerCounterState extends State<PlayerCounter>
     with TickerProviderStateMixin {
-  int _playerCount = 0;
   Offset? _tapPosition;
   final List<Player> _players = [];
   final Random _random = Random();
@@ -34,11 +33,9 @@ class _PlayerCounterState extends State<PlayerCounter>
       onLongPressStart: (details) {
         setState(() {
           _tapPosition = details.localPosition;
-          _playerCount++;
-          print("Players: $_playerCount");
           final controller = CircleAnimationController(vsync: this);
           _players.add(Player(
-              _playerCount, _tapPosition!, _getRandomColor(), controller));
+              _players.length, _tapPosition!, _getRandomColor(), controller));
         });
       },
       onDoubleTapDown: (details) {
