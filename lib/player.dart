@@ -9,7 +9,7 @@ class Player {
   final CircleAnimationController animationController;
 
   Player(this.id, this.position, this.color, this.animationController);
-
+  //animates the ripple using the package, uses animationSize from the default Flutter animation for sizing.
   Widget buildAnimatedCircle() {
     return AnimatedBuilder(
       animation: animationController.controller,

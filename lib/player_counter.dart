@@ -2,7 +2,6 @@ import 'dart:math';
 import 'player.dart';
 import 'package:flutter/material.dart';
 import 'circle_animation_controller.dart';
-//ripple animation
 
 class PlayerCounter extends StatefulWidget {
   const PlayerCounter({super.key});
@@ -16,7 +15,6 @@ class _PlayerCounterState extends State<PlayerCounter>
   Offset? _tapPosition;
   final List<Player> _players = [];
   final Random _random = Random();
-  //late CircleAnimationController _controller;
 
   Color _getRandomColor() {
     return Color.fromARGB(
@@ -39,9 +37,32 @@ class _PlayerCounterState extends State<PlayerCounter>
         });
       },
       onDoubleTapDown: (details) {
-        // remove the double tapped object
+        //remove the player that is double-tapped
+        setState(() {
+          final deleteTapPosition =
+              details.localPosition; //position double-tapped
+          Player? tappedPlayer; //player that is tapped, this can be Null
+
+          for (var player in _players) {
+            //compare tap position to all players positions
+            final position = player.position;
+            final size = player.animationController.animationSize.value;
+            if (deleteTapPosition.dx >= position.dx - size / 2 &&
+                deleteTapPosition.dx <= position.dx + size / 2 &&
+                deleteTapPosition.dy >= position.dy - size / 2 &&
+                deleteTapPosition.dy <= position.dy + size / 2) {
+              tappedPlayer = player;
+              break;
+            }
+          }
+
+          if (tappedPlayer != null) {//if a player is double-tapped, remove this player.
+            _players.remove(tappedPlayer);
+            tappedPlayer.dispose();
+          }
+        });
       },
-      child: Container(
+      child: Container( //container to hold the players
         color: Colors.transparent,
         child: Stack(
           children: <Widget>[
