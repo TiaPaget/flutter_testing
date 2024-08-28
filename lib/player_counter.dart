@@ -16,6 +16,9 @@ class _PlayerCounterState extends State<PlayerCounter>
   final List<Player> _players = [];
   final Random _random = Random();
 
+  //return the list of players
+  List<Player> get players => _players;
+
   Color _getRandomColor() {
     return Color.fromARGB(
       255, //alpha
@@ -23,6 +26,11 @@ class _PlayerCounterState extends State<PlayerCounter>
       _random.nextInt(156) + 100, //green
       _random.nextInt(156) + 100, //blue
     );
+  }
+
+  //select a random player from the list
+  Player selectRandomPlayer() {
+    return _players[_random.nextInt(_players.length)];
   }
 
   @override
@@ -34,6 +42,7 @@ class _PlayerCounterState extends State<PlayerCounter>
           final controller = CircleAnimationController(vsync: this);
           _players.add(Player(
               _players.length, _tapPosition!, _getRandomColor(), controller));
+
         });
       },
       onDoubleTapDown: (details) {
@@ -56,13 +65,15 @@ class _PlayerCounterState extends State<PlayerCounter>
             }
           }
 
-          if (tappedPlayer != null) {//if a player is double-tapped, remove this player.
+          if (tappedPlayer != null) {
+            //if a player is double-tapped, remove this player.
             _players.remove(tappedPlayer);
             tappedPlayer.dispose();
           }
         });
       },
-      child: Container( //container to hold the players
+      child: Container(
+        //container to hold the players
         color: Colors.transparent,
         child: Stack(
           children: <Widget>[

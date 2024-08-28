@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'theme.dart';
 import 'player_counter.dart';
+import 'player_decider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,8 +48,8 @@ class MainPage extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        //print("Decide button pressed");
-                        //Decide button
+                        //pick the winning player
+                        //display decider animation
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(

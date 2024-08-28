@@ -10,6 +10,15 @@ class Player {
 
   Player(this.id, this.position, this.color, this.animationController);
   //animates the ripple using the package, uses animationSize from the default Flutter animation for sizing.
+
+  //greyscale colour from the randomised player colour
+  Color get greyscaleColor {
+    double luminance =
+        0.299 * color.red + 0.587 * color.green + 0.114 * color.blue;
+    int greyValue = luminance.round();
+    return Color.fromARGB(color.alpha, greyValue, greyValue, greyValue);
+  }
+
   Widget buildAnimatedCircle() {
     return AnimatedBuilder(
       animation: animationController.controller,
