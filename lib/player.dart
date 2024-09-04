@@ -6,13 +6,14 @@ class Player {
   final int id;
   final Offset position;
   final Color color;
+  final Color greyscaleColor;
   final CircleAnimationController animationController;
 
-  Player(this.id, this.position, this.color, this.animationController);
+  Player(this.id, this.position, this.color, this.greyscaleColor, this.animationController);
   //animates the ripple using the package, uses animationSize from the default Flutter animation for sizing.
 
   //greyscale colour from the randomised player colour
-  Color get greyscaleColor {
+  static Color getGreyscaleColor(Color color) {
     double luminance =
         0.299 * color.red + 0.587 * color.green + 0.114 * color.blue;
     int greyValue = luminance.round();

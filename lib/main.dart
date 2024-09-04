@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_testing/player.dart';
 import 'theme.dart';
 import 'player_counter.dart';
-import 'player_decider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,8 +21,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  final List<Player> _players = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +51,10 @@ class MainPage extends StatelessWidget {
               child: Stack(
                 children: [
                   //touch area
-                  const PlayerCounter(),
+                  PlayerCounter(players: _players),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
-                        //pick the winning player
-                        //display decider animation
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 10),

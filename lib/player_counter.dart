@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'circle_animation_controller.dart';
 
 class PlayerCounter extends StatefulWidget {
-  const PlayerCounter({super.key});
+  const PlayerCounter({required this.players, super.key});
 
+  final List<Player> players;
   @override
   State<PlayerCounter> createState() => _PlayerCounterState();
 }
@@ -13,11 +14,10 @@ class PlayerCounter extends StatefulWidget {
 class _PlayerCounterState extends State<PlayerCounter>
     with TickerProviderStateMixin {
   Offset? _tapPosition;
-  final List<Player> _players = [];
   final Random _random = Random();
 
   //return the list of players
-  List<Player> get players => _players;
+  List<Player> get players => widget.players;
 
   Color _getRandomColor() {
     return Color.fromARGB(
@@ -28,11 +28,6 @@ class _PlayerCounterState extends State<PlayerCounter>
     );
   }
 
-  //select a random player from the list
-  Player selectRandomPlayer() {
-    return _players[_random.nextInt(_players.length)];
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -40,9 +35,9 @@ class _PlayerCounterState extends State<PlayerCounter>
         setState(() {
           _tapPosition = details.localPosition;
           final controller = CircleAnimationController(vsync: this);
-          _players.add(Player(
-              _players.length, _tapPosition!, _getRandomColor(), controller));
-
+          final playerColor = _getRandomColor();
+          widget.players.add(Player(widget.players.length, _tapPosition!,
+              playerColor, Player.getGreyscaleColor(playerColor), controller));
         });
       },
       onDoubleTapDown: (details) {
@@ -52,7 +47,7 @@ class _PlayerCounterState extends State<PlayerCounter>
               details.localPosition; //position double-tapped
           Player? tappedPlayer; //player that is tapped, this can be Null
 
-          for (var player in _players) {
+          for (var player in widget.players) {
             //compare tap position to all players positions
             final position = player.position;
             final size = player.animationController.animationSize.value;
@@ -67,7 +62,7 @@ class _PlayerCounterState extends State<PlayerCounter>
 
           if (tappedPlayer != null) {
             //if a player is double-tapped, remove this player.
-            _players.remove(tappedPlayer);
+            widget.players.remove(tappedPlayer);
             tappedPlayer.dispose();
           }
         });
@@ -77,7 +72,7 @@ class _PlayerCounterState extends State<PlayerCounter>
         color: Colors.transparent,
         child: Stack(
           children: <Widget>[
-            ..._players.map((player) => player.buildAnimatedCircle()),
+            ...widget.players.map((player) => player.buildAnimatedCircle()),
           ],
         ),
       ),
@@ -86,7 +81,7 @@ class _PlayerCounterState extends State<PlayerCounter>
 
   @override
   void dispose() {
-    for (var player in _players) {
+    for (var player in widget.players) {
       player.dispose();
     }
     super.dispose();
