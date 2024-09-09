@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_testing/player.dart';
 import 'theme.dart';
@@ -30,6 +33,21 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final List<Player> _players = [];
+  //how many times the picker will cycle through players
+  static const int pickerDuration = 8;
+  late int timerDuration;
+  Player? _winner;
+
+  Player pickPlayer() {
+    // pick a random player
+    for (var player in _players) {
+      player.isGrey = true;
+    }
+    final randomPlayer = _players[Random().nextInt(_players.length)];
+    randomPlayer.isGrey = false;
+    timerDuration--;
+    return randomPlayer;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +73,17 @@ class _MainPageState extends State<MainPage> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        for (var player in _players) {
-                          //setting all players to grey
-                          player.isGrey = true;
-                        }
-                        //cycle through players and pick a winner
-                        //foppr each player, set isgrey to true.
+                        timerDuration = pickerDuration;
+                        Timer.periodic(const Duration(milliseconds: 500),
+                            (timer) {
+                          setState(() {
+                            _winner = pickPlayer();
+                          });
+                          if (timerDuration < 1) {
+                            timer.cancel();
+                          }
+                        });
+                        // do something with the winner
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
