@@ -54,7 +54,14 @@ class _MainPageState extends State<MainPage> {
                   PlayerCounter(players: _players),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        for (var player in _players) {
+                          //setting all players to grey
+                          player.isGrey = true;
+                        }
+                        //cycle through players and pick a winner
+                        //foppr each player, set isgrey to true.
+                      },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 10),
